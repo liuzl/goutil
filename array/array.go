@@ -52,6 +52,9 @@ func Intersect(arrs ...interface{}) (reflect.Value, bool) {
 		if !ok {
 			return reflect.Value{}, ok
 		}
+		if tempArr.Len() == 0 {
+			continue
+		}
 
 		// check to be sure the type hasn't changed
 		if i > 0 && tempArr.Index(0).Kind() != kind {
