@@ -44,6 +44,6 @@ func init() {
 	c = c.Append(hlog.RequestIDHandler("req_id", "Request-Id"))
 }
 
-func HandlerWithLog(f func(http.ResponseWriter, *http.Request)) http.Handler {
+func WithLog(f func(http.ResponseWriter, *http.Request)) http.Handler {
 	return c.Then(http.HandlerFunc(f))
 }
