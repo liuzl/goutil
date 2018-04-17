@@ -1,9 +1,12 @@
 package rest
 
 import (
+	"fmt"
 	"github.com/justinas/alice"
+	"github.com/liuzl/filestore"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/hlog"
+	"io"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -14,7 +17,16 @@ var c alice.Chain
 
 func init() {
 	hostname, _ := os.Hostname()
-	log := zerolog.New(os.Stdout).With().
+	dir := filepath.Join(filepath.Dir(os.Args[0]), "zerolog")
+	var out io.Writer
+	f, err := filestore.NewFileStore(dir)
+	if err != nil {
+		out = os.Stdout
+		fmt.Fprintf(os.Stderr, "err: %+v, will zerolog to stdout\n", err)
+	} else {
+		out = f
+	}
+	log := zerolog.New(out).With().
 		Timestamp().
 		Str("service", filepath.Base(os.Args[0])).
 		Str("host", hostname).
