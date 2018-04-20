@@ -6,8 +6,8 @@ import (
 )
 
 type RestMessage struct {
-	Status  string `json:"status"`
-	Message string `json:"message"`
+	Status  string      `json:"status"`
+	Message interface{} `json:"message"`
 }
 
 func MustEncode(w http.ResponseWriter, i interface{}) {
