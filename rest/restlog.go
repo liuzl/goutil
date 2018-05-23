@@ -53,7 +53,8 @@ func init() {
 	c = c.Append(hlog.RemoteAddrHandler("ip"))
 	c = c.Append(hlog.UserAgentHandler("user_agent"))
 	c = c.Append(hlog.RefererHandler("referer"))
-	c = c.Append(hlog.RequestIDHandler("req_id", "Request-Id"))
+	c = c.Append(RequestIDHandler("req_id", "Request-Id"))
+	c = c.Append(DumpRequestHandler("request"))
 }
 
 func WithLog(f func(http.ResponseWriter, *http.Request)) http.Handler {
