@@ -39,7 +39,7 @@ func init() {
 
 	c = c.Append(hlog.AccessHandler(func(r *http.Request,
 		status, size int, duration time.Duration) {
-		hlog.FromRequest(r).Info().
+		hlog.FromRequest(r).Debug().
 			Str("method", r.Method).
 			Str("url", r.URL.String()).
 			Int("status", status).
