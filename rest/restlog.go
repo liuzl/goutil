@@ -51,8 +51,9 @@ func init() {
 	// Install some provided extra handler to set some request's context fields.
 	// Thanks to those handler, all our logs will come with some pre-populated fields.
 	c = c.Append(hlog.RemoteAddrHandler("ip"))
-	c = c.Append(hlog.UserAgentHandler("user_agent"))
-	c = c.Append(hlog.RefererHandler("referer"))
+	c = c.Append(HeaderHandler("X-Forwarded-For"))
+	c = c.Append(HeaderHandler("User-Agent"))
+	c = c.Append(HeaderHandler("Referer"))
 	c = c.Append(RequestIDHandler("req_id", "Request-Id"))
 	c = c.Append(DumpRequestHandler("request"))
 }

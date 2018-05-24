@@ -66,3 +66,19 @@ func DumpRequestHandler(fieldKey string) func(next http.Handler) http.Handler {
 		})
 	}
 }
+
+// HeaderHandler adds the request's headerName from Header as a field to the
+// context's logger using headerName as field key.
+func HeaderHandler(headerName string) func(next http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if v := r.Header.Get(headerName); v != "" {
+				log := zerolog.Ctx(r.Context())
+				log.UpdateContext(func(c zerolog.Context) zerolog.Context {
+					return c.Str(headerName, v)
+				})
+			}
+			next.ServeHTTP(w, r)
+		})
+	}
+}
