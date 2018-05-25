@@ -1,6 +1,7 @@
 package rest
 
 import (
+	"context"
 	"net/http"
 	"net/http/httputil"
 
@@ -8,12 +9,14 @@ import (
 	"github.com/rs/zerolog"
 )
 
+type idKey struct{}
+
 // IDFromRequest returns the unique id associated to the request if any.
-func IDFromRequest(r *http.Request, headerName string) (id xid.ID, err error) {
+func IDFromRequest(r *http.Request) (id xid.ID, ok bool) {
 	if r == nil {
 		return
 	}
-	id, err = xid.FromString(r.Header.Get(headerName))
+	id, ok = r.Context().Value(idKey{}).(xid.ID)
 	return
 }
 
@@ -30,9 +33,11 @@ func RequestIDHandler(fieldKey, headerName string) func(next http.Handler) http.
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			ctx := r.Context()
-			id, err := IDFromRequest(r, headerName)
-			if err != nil {
+			id, ok := IDFromRequest(r)
+			if !ok {
 				id = xid.New()
+				ctx = context.WithValue(ctx, idKey{}, id)
+				r = r.WithContext(ctx)
 			}
 			if fieldKey != "" {
 				log := zerolog.Ctx(ctx)
