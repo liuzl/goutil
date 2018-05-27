@@ -55,6 +55,7 @@ func init() {
 	c = c.Append(HeaderHandler("User-Agent"))
 	c = c.Append(HeaderHandler("Referer"))
 	c = c.Append(RequestIDHandler("req_id", "Request-Id"))
+	c = c.Append(DumpResponseHandler("response"))
 	c = c.Append(DumpRequestHandler("request"))
 }
 

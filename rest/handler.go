@@ -1,6 +1,7 @@
 package rest
 
 import (
+	"bytes"
 	"net/http"
 	"net/http/httputil"
 
@@ -63,6 +64,27 @@ func DumpRequestHandler(fieldKey string) func(next http.Handler) http.Handler {
 				return c.Str(fieldKey, msg)
 			})
 			next.ServeHTTP(w, r)
+		})
+	}
+}
+
+func DumpResponseHandler(fieldKey string) func(next http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			nw := NewRespProxyWriter(w)
+			next.ServeHTTP(nw, r)
+
+			var b bytes.Buffer
+			nw.Header().WriteSubset(&b, nil)
+			log := zerolog.Ctx(r.Context())
+			log.UpdateContext(func(c zerolog.Context) zerolog.Context {
+				return c.Str(fieldKey, ResponseLog{
+					Request:    r,
+					StatusCode: nw.Code,
+					Body:       string(nw.Body),
+					Header:     string(b.Bytes())}.DumpResponse())
+			})
+			return
 		})
 	}
 }
