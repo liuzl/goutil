@@ -54,6 +54,7 @@ func init() {
 	c = c.Append(hlog.UserAgentHandler("user_agent"))
 	c = c.Append(hlog.RefererHandler("referer"))
 	c = c.Append(RequestIDHandler("req_id", "Request-Id"))
+	c = c.Append(DumpResponseHandler("response"))
 	c = c.Append(DumpRequestHandler("request"))
 }
 
