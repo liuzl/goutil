@@ -3,6 +3,7 @@ package goutil
 import (
 	"fmt"
 	"regexp"
+	"strings"
 	"sync"
 )
 
@@ -39,6 +40,24 @@ func RegexpParse(content, pattern string) ([]string, error) {
 			ret = append(ret, res[i][0])
 		case len(res[i]) > 1:
 			ret = append(ret, res[i][1:]...)
+		}
+	}
+	return ret, nil
+}
+
+func RegexpExtract(content, pattern string) (map[string]string, error) {
+	re, err := pool.Compile(pattern)
+	if err != nil {
+		return nil, fmt.Errorf("re:[%s] error:%+v", pattern, err)
+	}
+	ret := make(map[string]string)
+	match := re.FindStringSubmatch(content)
+	for i, name := range re.SubexpNames() {
+		if i != 0 {
+			if name == "" {
+				name = fmt.Sprintf("%d", i)
+			}
+			ret[name] = strings.TrimSpace(match[i])
 		}
 	}
 	return ret, nil
