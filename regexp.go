@@ -50,8 +50,11 @@ func RegexpExtract(content, pattern string) (map[string]string, error) {
 	if err != nil {
 		return nil, fmt.Errorf("re:[%s] error:%+v", pattern, err)
 	}
-	ret := make(map[string]string)
 	match := re.FindStringSubmatch(content)
+	if len(match) == 0 {
+		return nil, nil
+	}
+	ret := make(map[string]string)
 	for i, name := range re.SubexpNames() {
 		if i != 0 {
 			if name == "" {
