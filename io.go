@@ -2,8 +2,10 @@ package goutil
 
 import (
 	"bytes"
+	"compress/gzip"
 	"io"
 	"os"
+	"strings"
 )
 
 func LineCount(r io.Reader) (int, error) {
@@ -26,10 +28,23 @@ func LineCount(r io.Reader) (int, error) {
 }
 
 func FileLineCount(f string) (int, error) {
-	r, err := os.Open(f)
-	if err != nil {
-		return 0, err
+	if strings.HasSuffix(strings.ToLower(f), ".gz") {
+		fr, err := os.Open(f)
+		if err != nil {
+			return 0, err
+		}
+		defer fr.Close()
+		r, err := gzip.NewReader(fr)
+		if err != nil {
+			return 0, err
+		}
+		return LineCount(r)
+	} else {
+		r, err := os.Open(f)
+		if err != nil {
+			return 0, err
+		}
+		defer r.Close()
+		return LineCount(r)
 	}
-	defer r.Close()
-	return LineCount(r)
 }
