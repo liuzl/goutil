@@ -20,6 +20,17 @@ func IsASCII(r rune) bool {
 	return r <= unicode.MaxASCII
 }
 
+func IsLatin1(r rune) bool {
+	return r <= unicode.MaxLatin1
+}
+
+func IsCJK(r rune) bool {
+	if unicode.Is(unicode.Scripts["Han"], r) {
+		return true
+	}
+	return false
+}
+
 func Join(s []string) string {
 	if len(s) == 0 {
 		return ""
@@ -27,7 +38,7 @@ func Join(s []string) string {
 	var ss []string
 	pre := false
 	for _, str := range s {
-		cur := StringIs(str, IsASCII)
+		cur := StringIs(str, func(r rune) bool { return !IsCJK(r) })
 		if pre && cur {
 			ss = append(ss, " ")
 		}
