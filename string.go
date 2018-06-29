@@ -1,5 +1,10 @@
 package goutil
 
+import (
+	"strings"
+	"unicode"
+)
+
 type is func(rune) bool
 
 func StringIs(s string, f is) bool {
@@ -9,4 +14,25 @@ func StringIs(s string, f is) bool {
 		}
 	}
 	return true
+}
+
+func IsASCII(r rune) bool {
+	return r <= unicode.MaxASCII
+}
+
+func Join(s []string) string {
+	if len(s) == 0 {
+		return ""
+	}
+	var ss []string
+	pre := false
+	for _, str := range s {
+		cur := StringIs(str, IsASCII)
+		if pre && cur {
+			ss = append(ss, " ")
+		}
+		ss = append(ss, str)
+		pre = cur
+	}
+	return strings.Join(ss, "")
 }
