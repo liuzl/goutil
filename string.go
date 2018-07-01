@@ -31,6 +31,17 @@ func IsCJK(r rune) bool {
 	return false
 }
 
+var noSpaceScripts = []string{"Han", "Lao", "Thai", "Tibetan"}
+
+func NoSpaceWriting(r rune) bool {
+	for _, s := range noSpaceScripts {
+		if unicode.Is(unicode.Scripts[s], r) {
+			return true
+		}
+	}
+	return false
+}
+
 func Join(s []string) string {
 	if len(s) == 0 {
 		return ""
@@ -38,7 +49,7 @@ func Join(s []string) string {
 	var ss []string
 	pre := false
 	for _, str := range s {
-		cur := StringIs(str, func(r rune) bool { return !IsCJK(r) })
+		cur := StringIs(str, func(r rune) bool { return !NoSpaceWriting(r) })
 		if pre && cur {
 			ss = append(ss, " ")
 		}
