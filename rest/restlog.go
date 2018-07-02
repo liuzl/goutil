@@ -1,6 +1,7 @@
 package rest
 
 import (
+	"flag"
 	"fmt"
 	"github.com/justinas/alice"
 	"github.com/liuzl/filestore"
@@ -13,13 +14,16 @@ import (
 	"time"
 )
 
-var c alice.Chain
+var (
+	c       alice.Chain
+	zlogDir = flag.String("zlog_dir", filepath.Join(filepath.Dir(os.Args[0]), "zerolog"), "write log files in this directory")
+)
 
 func init() {
+	flag.Parse()
 	hostname, _ := os.Hostname()
-	dir := filepath.Join(filepath.Dir(os.Args[0]), "zerolog")
 	var out io.Writer
-	f, err := filestore.NewFileStore(dir)
+	f, err := filestore.NewFileStore(*zlogDir)
 	if err != nil {
 		out = os.Stdout
 		fmt.Fprintf(os.Stderr, "err: %+v, will zerolog to stdout\n", err)
