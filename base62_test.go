@@ -5,7 +5,7 @@ import (
 )
 
 func TestBase62(t *testing.T) {
-	cases := map[int64]string{
+	cases := map[uint64]string{
 		0:             "0",
 		12345:         "3d7",
 		6285600000447: "1MF0R2gv",
