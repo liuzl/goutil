@@ -2,6 +2,8 @@ package goutil
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestBase62(t *testing.T) {
@@ -12,15 +14,11 @@ func TestBase62(t *testing.T) {
 	}
 	for k, v := range cases {
 		v1 := ToB62(k)
-		if v1 != v {
-			t.Error(v, v1)
-		}
+		assert.Equal(t, v, v1, "should be equal")
 		k1, err := FromB62(v)
 		if err != nil {
 			t.Error(err)
 		}
-		if k1 != k {
-			t.Error(k, k1)
-		}
+		assert.Equal(t, k, k1, "should be equal")
 	}
 }
