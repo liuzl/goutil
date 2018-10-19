@@ -3,6 +3,8 @@ package goutil
 import (
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestZodiac(t *testing.T) {
@@ -17,10 +19,7 @@ func TestZodiac(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		if GetZodiacForTime(tm) != c.zodiac {
-			t.Errorf("GetZodiacForTime(t):%s != expected:%s",
-				GetZodiacForTime(tm), c.zodiac)
-		}
+		assert.Equal(t, GetZodiacForTime(tm), c.zodiac, "")
 	}
 }
 
@@ -36,21 +35,9 @@ func TestCnZodiacGanZhi(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		if GetCnZodiacForTime(tm) != c.zodiac {
-			t.Errorf("GetCnZodiacForTime(t):%s != expected:%s",
-				GetCnZodiacForTime(tm), c.zodiac)
-		}
-		if GetGanForTime(tm) != c.gan {
-			t.Errorf("GetGanForTime(t):%s != expected:%s",
-				GetGanForTime(tm), c.gan)
-		}
-		if GetZhiForTime(tm) != c.zhi {
-			t.Errorf("GetZhiForTime(t):%s != expected:%s",
-				GetZhiForTime(tm), c.zhi)
-		}
-		if GetCnZodiacEmojiForTime(tm) != c.emoji {
-			t.Errorf("GetCnZodiacEmojiForTime(t):%s != expected:%s",
-				GetCnZodiacEmojiForTime(tm), c.emoji)
-		}
+		assert.Equal(t, GetCnZodiacForTime(tm), c.zodiac, "")
+		assert.Equal(t, GetGanForTime(tm), c.gan, "")
+		assert.Equal(t, GetZhiForTime(tm), c.zhi, "")
+		assert.Equal(t, GetCnZodiacEmojiForTime(tm), c.emoji, "")
 	}
 }

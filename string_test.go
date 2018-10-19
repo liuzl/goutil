@@ -2,6 +2,8 @@ package goutil
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestJoin(t *testing.T) {
@@ -13,8 +15,6 @@ func TestJoin(t *testing.T) {
 	expects := []string{"", "hello world", "天津大学"}
 
 	for i := 0; i < len(cases); i++ {
-		if Join(cases[i]) != expects[i] {
-			t.Error(expects[i], cases[i])
-		}
+		assert.Equal(t, Join(cases[i]), expects[i], "")
 	}
 }
