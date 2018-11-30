@@ -34,6 +34,9 @@ func IsCJK(r rune) bool {
 var noSpaceScripts = []string{"Han", "Lao", "Thai", "Tibetan"}
 
 func NoSpaceWriting(r rune) bool {
+	if unicode.IsPunct(r) {
+		return true
+	}
 	for _, s := range noSpaceScripts {
 		if unicode.Is(unicode.Scripts[s], r) {
 			return true
