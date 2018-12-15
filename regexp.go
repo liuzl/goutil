@@ -27,6 +27,10 @@ func (r *Regexps) Compile(pattern string) (*regexp.Regexp, error) {
 
 var pool = &Regexps{items: make(map[string]*regexp.Regexp)}
 
+func Regexp(pattern string) (*regexp.Regexp, error) {
+	return pool.Compile(pattern)
+}
+
 func RegexpParse(content, pattern string) ([]string, error) {
 	re, err := pool.Compile(pattern)
 	if err != nil {
