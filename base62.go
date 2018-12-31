@@ -11,7 +11,7 @@ const (
 	base     = uint64(len(alphabet))
 )
 
-// Encode decoded integer to base62 string.
+// ToB62 encodes the decoded integer to base62 string.
 func ToB62(n uint64) string {
 	if n == 0 {
 		return "0"
@@ -26,7 +26,7 @@ func ToB62(n uint64) string {
 	return string(b)
 }
 
-// Decode a base62 encoded string to int.
+// FromB62 decodes a base62 encoded string to int.
 // Returns an error if input s is not valid base62 literal [0-9a-zA-Z].
 func FromB62(s string) (uint64, error) {
 	var r uint64

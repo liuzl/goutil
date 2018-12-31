@@ -28,3 +28,27 @@ func TestBase62MD5(t *testing.T) {
 		assert.Equal(t, v, v1, "should be equal")
 	}
 }
+
+func TestCrcUint32(t *testing.T) {
+	cases := map[string]uint32{
+		"":         0,
+		"123456":   0x972d361,
+		"password": 0x35c246d5,
+	}
+	for k, v := range cases {
+		v1 := CrcUint32(k)
+		assert.Equal(t, v, v1, "should be equal")
+	}
+}
+
+func TestCRC32(t *testing.T) {
+	cases := map[string]string{
+		"":         "0000",
+		"123456":   "2HSJGr",
+		"password": "50HLUb",
+	}
+	for k, v := range cases {
+		v1 := CRC32(k)
+		assert.Equal(t, v, v1, "should be equal")
+	}
+}
