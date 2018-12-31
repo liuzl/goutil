@@ -5,6 +5,7 @@ import (
 	"reflect"
 )
 
+// Call the func by name stored in m, with params as args
 func Call(m map[string]interface{},
 	name string, params ...interface{}) ([]reflect.Value, error) {
 	var nf interface{}

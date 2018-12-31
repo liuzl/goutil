@@ -7,11 +7,13 @@ import (
 	"sync"
 )
 
+// Regexps holds a map of regexps
 type Regexps struct {
 	sync.Mutex
 	items map[string]*regexp.Regexp
 }
 
+// Compile the pattern string and cache it
 func (r *Regexps) Compile(pattern string) (*regexp.Regexp, error) {
 	r.Lock()
 	defer r.Unlock()
@@ -27,10 +29,12 @@ func (r *Regexps) Compile(pattern string) (*regexp.Regexp, error) {
 
 var pool = &Regexps{items: make(map[string]*regexp.Regexp)}
 
+// Regexp returns the cached *regexp.Regexp
 func Regexp(pattern string) (*regexp.Regexp, error) {
 	return pool.Compile(pattern)
 }
 
+// RegexpParse extracts all matched patterns from content
 func RegexpParse(content, pattern string) ([]string, error) {
 	re, err := pool.Compile(pattern)
 	if err != nil {
@@ -38,7 +42,7 @@ func RegexpParse(content, pattern string) ([]string, error) {
 	}
 	var ret []string
 	res := re.FindAllStringSubmatch(content, -1)
-	for i, _ := range res {
+	for i := range res {
 		switch {
 		case len(res[i]) == 1:
 			ret = append(ret, res[i][0])
@@ -49,6 +53,7 @@ func RegexpParse(content, pattern string) ([]string, error) {
 	return ret, nil
 }
 
+// RegexpExtract extracts all named matched patterns from content
 func RegexpExtract(content, pattern string) (map[string]string, error) {
 	re, err := pool.Compile(pattern)
 	if err != nil {
@@ -70,6 +75,7 @@ func RegexpExtract(content, pattern string) (map[string]string, error) {
 	return ret, nil
 }
 
+// RegexpMatch returns whether the content match the pattern or not
 func RegexpMatch(content, pattern string) bool {
 	re, err := pool.Compile(pattern)
 	if err != nil {

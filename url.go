@@ -4,7 +4,8 @@ import (
 	"net/url"
 )
 
-func MakeAbsoluteUrl(href, baseurl string) (string, error) {
+// MakeAbsoluteURL makes href absolute with repect to baseurl
+func MakeAbsoluteURL(href, baseurl string) (string, error) {
 	u, err := url.Parse(href)
 	if err != nil {
 		return "", err

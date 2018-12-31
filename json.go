@@ -5,7 +5,8 @@ import (
 	"encoding/json"
 )
 
-func JsonMarshal(t interface{}) ([]byte, error) {
+// JSONMarshal marshals t in json without HTML escaping
+func JSONMarshal(t interface{}) ([]byte, error) {
 	buffer := &bytes.Buffer{}
 	encoder := json.NewEncoder(buffer)
 	encoder.SetEscapeHTML(false)
@@ -13,8 +14,9 @@ func JsonMarshal(t interface{}) ([]byte, error) {
 	return buffer.Bytes(), err
 }
 
-func JsonMarshalIndent(t interface{}, prefix, indent string) ([]byte, error) {
-	b, err := JsonMarshal(t)
+// JSONMarshalIndent marshals t in json with prefix and indention
+func JSONMarshalIndent(t interface{}, prefix, indent string) ([]byte, error) {
+	b, err := JSONMarshal(t)
 	if err != nil {
 		return b, err
 	}

@@ -7,6 +7,7 @@ import (
 	"time"
 )
 
+// ReverseOrderEncode encodes digits string
 func ReverseOrderEncode(s string) string {
 	var buf []rune
 	for _, c := range s {
@@ -19,6 +20,7 @@ func ReverseOrderEncode(s string) string {
 	return string(buf)
 }
 
+// FileGuard is used for file lock
 func FileGuard(f string) bool {
 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	if err != nil {

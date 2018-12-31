@@ -7,6 +7,7 @@ import (
 
 type is func(rune) bool
 
+// StringIs checkes whether each runes of s satisfy f
 func StringIs(s string, f is) bool {
 	for _, c := range s {
 		if !f(c) {
@@ -16,14 +17,17 @@ func StringIs(s string, f is) bool {
 	return true
 }
 
+// IsASCII checkes whether r is within ASCII or not
 func IsASCII(r rune) bool {
 	return r <= unicode.MaxASCII
 }
 
+// IsLatin1 checkes whether r is within Latin1 or not
 func IsLatin1(r rune) bool {
 	return r <= unicode.MaxLatin1
 }
 
+// IsCJK checkes whether r is a CJK rune or not
 func IsCJK(r rune) bool {
 	if unicode.Is(unicode.Scripts["Han"], r) {
 		return true
@@ -33,6 +37,7 @@ func IsCJK(r rune) bool {
 
 var noSpaceScripts = []string{"Han", "Lao", "Thai", "Tibetan"}
 
+// NoSpaceWriting checkes whether r is within Han, Lao, Thai and Tibetan
 func NoSpaceWriting(r rune) bool {
 	if unicode.IsPunct(r) {
 		return true
@@ -45,6 +50,7 @@ func NoSpaceWriting(r rune) bool {
 	return false
 }
 
+// Join concates s smartly
 func Join(s []string) string {
 	if len(s) == 0 {
 		return ""
