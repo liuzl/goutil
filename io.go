@@ -1,6 +1,7 @@
 package goutil
 
 import (
+	"bufio"
 	"bytes"
 	"compress/gzip"
 	"io"
@@ -49,4 +50,34 @@ func FileLineCount(f string) (int, error) {
 	}
 	defer r.Close()
 	return LineCount(r)
+}
+
+// ForEachLine higher order function that processes each line of text by callback function.
+// The last non-empty line of input will be returned even if it has no newline.
+func ForEachLine(br *bufio.Reader, callback func(string) error) error {
+	stop := false
+	for {
+		if stop {
+			break
+		}
+		line, err := br.ReadString('\n')
+		if err == io.EOF {
+			stop = true
+		} else if err != nil {
+			return err
+		}
+		line = strings.TrimSuffix(line, "\n")
+		if line == "" {
+			if !stop {
+				if err = callback(line); err != nil {
+					return err
+				}
+			}
+			continue
+		}
+		if err = callback(line); err != nil {
+			return err
+		}
+	}
+	return nil
 }
