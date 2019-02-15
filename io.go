@@ -53,7 +53,7 @@ func FileLineCount(f string) (int, error) {
 }
 
 // ForEachLine higher order function that processes each line of text by callback function.
-// The last non-empty line of input will be returned even if it has no newline.
+// The last non-empty line of input will be processed even if it has no newline.
 func ForEachLine(br *bufio.Reader, callback func(string) error) error {
 	stop := false
 	for {
