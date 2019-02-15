@@ -10,7 +10,7 @@ import (
 
 func TestFileLineCount(t *testing.T) {
 	cases := map[string]int{
-		"io.go": 83,
+		"io_test.go": 37,
 	}
 	for k, v := range cases {
 		cnt, err := FileLineCount(k)
