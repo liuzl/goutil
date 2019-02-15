@@ -29,26 +29,26 @@ type ResponseProxyWriter struct {
 	wroteHeader bool
 }
 
-func (this *ResponseProxyWriter) Header() http.Header {
-	return this.writer.Header()
+func (w *ResponseProxyWriter) Header() http.Header {
+	return w.writer.Header()
 }
 
-func (this *ResponseProxyWriter) Write(bytes []byte) (int, error) {
-	if !this.wroteHeader {
-		this.WriteHeader(http.StatusOK)
+func (w *ResponseProxyWriter) Write(bytes []byte) (int, error) {
+	if !w.wroteHeader {
+		w.WriteHeader(http.StatusOK)
 	}
-	this.Body = append(this.Body, bytes[0:len(bytes)]...)
-	return this.writer.Write(bytes)
+	w.Body = append(w.Body, bytes[0:len(bytes)]...)
+	return w.writer.Write(bytes)
 }
 
-func (this *ResponseProxyWriter) WriteHeader(i int) {
-	if this.wroteHeader {
+func (w *ResponseProxyWriter) WriteHeader(i int) {
+	if w.wroteHeader {
 		return
 	}
-	this.wroteHeader = true
+	w.wroteHeader = true
 
-	this.Code = i
-	this.writer.WriteHeader(i)
+	w.Code = i
+	w.writer.WriteHeader(i)
 }
 
 func NewRespProxyWriter(w http.ResponseWriter) *ResponseProxyWriter {
