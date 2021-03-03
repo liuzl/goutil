@@ -17,7 +17,7 @@ func Base64zlibEncode(content string) string {
 	return base64.StdEncoding.EncodeToString(in.Bytes())
 }
 
-// Base64zlibEncode base64 decode the string and zlib decompress it
+// Base64zlibDecode base64 decode the string and zlib decompress it
 func Base64zlibDecode(s string) string {
 	data, err := base64.StdEncoding.DecodeString(s)
 	if err != nil {
