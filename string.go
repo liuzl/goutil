@@ -1,7 +1,10 @@
 package goutil
 
 import (
+	"crypto/rand"
+	r "math/rand"
 	"strings"
+	"time"
 	"unicode"
 )
 
@@ -66,4 +69,25 @@ func Join(s []string) string {
 		pre = cur
 	}
 	return strings.Join(ss, "")
+}
+
+const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+// GenerateRandomString generate random strings of given length n
+func GenerateRandomString(n int) string {
+	var bytes = make([]byte, n)
+	var randBy bool
+	if num, err := rand.Read(bytes); num != n || err != nil {
+		r.Seed(time.Now().UnixNano())
+		randBy = true
+	}
+	letterLen := len(letterBytes)
+	for i, b := range bytes {
+		if randBy {
+			bytes[i] = letterBytes[r.Intn(letterLen)]
+		} else {
+			bytes[i] = letterBytes[b%byte(letterLen)]
+		}
+	}
+	return string(bytes)
 }

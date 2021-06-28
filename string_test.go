@@ -18,3 +18,8 @@ func TestJoin(t *testing.T) {
 		assert.Equal(t, Join(cases[i]), expects[i], "")
 	}
 }
+
+func TestRandString(t *testing.T) {
+	t.Log(GenerateRandomString(20))
+	t.Log(GenerateRandomString(40))
+}
