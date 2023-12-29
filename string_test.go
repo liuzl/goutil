@@ -8,9 +8,9 @@ import (
 
 func TestJoin(t *testing.T) {
 	cases := [][]string{
-		[]string{},
-		[]string{"hello", "world"},
-		[]string{"天", "津", "大", "学"},
+		{},
+		{"hello", "world"},
+		{"天", "津", "大", "学"},
 	}
 	expects := []string{"", "hello world", "天津大学"}
 

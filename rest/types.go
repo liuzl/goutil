@@ -37,7 +37,7 @@ func (w *ResponseProxyWriter) Write(bytes []byte) (int, error) {
 	if !w.wroteHeader {
 		w.WriteHeader(http.StatusOK)
 	}
-	w.Body = append(w.Body, bytes[0:len(bytes)]...)
+	w.Body = append(w.Body, bytes[0:]...)
 	return w.writer.Write(bytes)
 }
 
