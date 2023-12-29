@@ -10,6 +10,23 @@ type RestMessage struct {
 	Message interface{} `json:"message"`
 }
 
+type ErrorMessage struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+}
+
+func ErrBadRequest(w http.ResponseWriter, message string) {
+	MustEncodeWithStatus(w,
+		map[string]*ErrorMessage{"error": {http.StatusBadRequest, message}},
+		http.StatusBadRequest)
+}
+
+func ErrInternalServer(w http.ResponseWriter, message string) {
+	MustEncodeWithStatus(w,
+		map[string]*ErrorMessage{"error": {http.StatusInternalServerError, message}},
+		http.StatusInternalServerError)
+}
+
 func MustEncode(w http.ResponseWriter, i interface{}) {
 	w.Header().Set("Cache-Control", "no-cache")
 	w.Header().Set("Content-type", "application/json;charset=utf-8")
