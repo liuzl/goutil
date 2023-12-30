@@ -27,6 +27,18 @@ func ErrInternalServer(w http.ResponseWriter, message string) {
 		http.StatusInternalServerError)
 }
 
+func ErrMethodNotAllowed(w http.ResponseWriter, message string) {
+	MustEncodeWithStatus(w,
+		map[string]*ErrorMessage{"error": {http.StatusMethodNotAllowed, message}},
+		http.StatusMethodNotAllowed)
+}
+
+func ErrorMessageWithStatus(w http.ResponseWriter, message string, status int) {
+	MustEncodeWithStatus(w,
+		map[string]*ErrorMessage{"error": {status, message}},
+		status)
+}
+
 func MustEncode(w http.ResponseWriter, i interface{}) {
 	w.Header().Set("Cache-Control", "no-cache")
 	w.Header().Set("Content-type", "application/json;charset=utf-8")
