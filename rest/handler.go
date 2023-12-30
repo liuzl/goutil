@@ -10,6 +10,9 @@ import (
 )
 
 // IDFromRequest returns the unique id associated to the request if any.
+// IDFromRequest extracts an ID from the specified header in the HTTP request.
+// The headerName parameter specifies the name of the header to extract the ID from.
+// It returns the extracted ID and any error encountered during the extraction process.
 func IDFromRequest(r *http.Request, headerName string) (id xid.ID, err error) {
 	if r == nil {
 		return
@@ -82,9 +85,8 @@ func DumpResponseHandler(fieldKey string) func(next http.Handler) http.Handler {
 					Request:    r,
 					StatusCode: nw.Code,
 					Body:       string(nw.Body),
-					Header:     string(b.Bytes())}.DumpResponse())
+					Header:     b.String()}.DumpResponse())
 			})
-			return
 		})
 	}
 }
