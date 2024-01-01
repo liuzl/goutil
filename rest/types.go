@@ -7,7 +7,7 @@ import (
 
 type ResponseLog struct {
 	Request    *http.Request
-	StatusCode int    `json:"staus_code"`
+	StatusCode int    `json:"status_code"`
 	Body       string `json:"body"`
 	Header     string `json:"header"`
 }
