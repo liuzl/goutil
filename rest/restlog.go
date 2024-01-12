@@ -23,6 +23,12 @@ var (
 
 var c alice.Chain
 var once sync.Once
+var log zerolog.Logger
+
+func Log() *zerolog.Logger {
+	initZlog()
+	return &log
+}
 
 func initZlog() {
 	once.Do(func() {
@@ -35,7 +41,7 @@ func initZlog() {
 		} else {
 			out = f
 		}
-		log := zerolog.New(out).With().
+		log = zerolog.New(out).With().
 			Timestamp().
 			Str("service", filepath.Base(os.Args[0])).
 			Str("host", hostname).
