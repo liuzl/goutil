@@ -3,6 +3,7 @@ module zliu.org/goutil
 go 1.19
 
 require (
+	github.com/carlmjohnson/requests v0.23.5
 	github.com/eknkc/basex v1.0.1
 	github.com/justinas/alice v1.2.0
 	github.com/liuzl/filestore v0.0.0-20200229104338-5ea723a6a528
@@ -39,8 +40,8 @@ require (
 	github.com/saintfish/chardet v0.0.0-20120816061221-3af4cd4741ca // indirect
 	github.com/syndtr/goleveldb v1.0.0 // indirect
 	github.com/torden/go-strutil v0.1.7 // indirect
-	golang.org/x/net v0.0.0-20220826154423-83b083e8dc8b // indirect
-	golang.org/x/sys v0.0.0-20220728004956-3c1f35247d10 // indirect
-	golang.org/x/text v0.3.7 // indirect
+	golang.org/x/net v0.15.0 // indirect
+	golang.org/x/sys v0.12.0 // indirect
+	golang.org/x/text v0.13.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
