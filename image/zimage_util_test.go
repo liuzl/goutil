@@ -76,3 +76,12 @@ func TestInferImageType(t *testing.T) {
 		})
 	}
 }
+
+func TestURLToInlineImageData(t *testing.T) {
+	url := "https://profile.line-scdn.net/0hAzoguxL4HlVSHg3Kc2FhAm5bEDglMBgdKitSOiUaEjJ3JlwFPitZMHMWQWwqKw5XZ34GM3MfRGB2"
+	result, err := URLToInlineImageData(url)
+	if err != nil {
+		t.Errorf("URLToInlineImageData failed: %v", err)
+	}
+	t.Logf("result: %s", result)
+}

@@ -66,3 +66,11 @@ func InferImageType(data []byte) string {
 		return "application/octet-stream"
 	}
 }
+
+func URLToInlineImageData(url string) (string, error) {
+	imageData, contentType, err := FetchImage(url)
+	if err != nil {
+		return "", err
+	}
+	return ConvertToInlineImageData(imageData, contentType), nil
+}
