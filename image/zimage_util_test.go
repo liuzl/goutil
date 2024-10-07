@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"testing"
 )
 
@@ -84,4 +85,13 @@ func TestURLToInlineImageData(t *testing.T) {
 		t.Errorf("URLToInlineImageData failed: %v", err)
 	}
 	t.Logf("result: %s", result)
+}
+
+func TestImageHash(t *testing.T) {
+	imageData, err := os.ReadFile("sample2.jpg")
+	if err != nil {
+		t.Errorf("os.ReadFile failed: %v", err)
+	}
+	hash := ImageHash(imageData)
+	t.Logf("hash: %s", hash)
 }

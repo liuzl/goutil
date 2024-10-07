@@ -5,11 +5,16 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
+	"image"
+	_ "image/gif"
+	_ "image/jpeg"
+	_ "image/png"
 	"net/http"
 	"strings"
 	"time"
 
 	"github.com/carlmjohnson/requests"
+	"github.com/corona10/goimagehash"
 )
 
 func FetchImage(url string) ([]byte, string, error) {
@@ -73,4 +78,16 @@ func URLToInlineImageData(url string) (string, error) {
 		return "", err
 	}
 	return ConvertToInlineImageData(imageData, contentType), nil
+}
+
+func ImageHash(data []byte) string {
+	img, _, err := image.Decode(bytes.NewReader(data))
+	if err != nil {
+		return ""
+	}
+	hash, err := goimagehash.PerceptionHash(img)
+	if err != nil {
+		return ""
+	}
+	return hash.ToString()
 }

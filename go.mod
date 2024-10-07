@@ -4,10 +4,12 @@ go 1.19
 
 require (
 	github.com/carlmjohnson/requests v0.23.5
+	github.com/corona10/goimagehash v1.1.0
 	github.com/eknkc/basex v1.0.1
 	github.com/justinas/alice v1.2.0
 	github.com/liuzl/filestore v0.0.0-20200229104338-5ea723a6a528
 	github.com/liuzl/ling v0.0.0-20200509031100-522aef269e3c
+	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
 	github.com/rs/xid v1.4.0
 	github.com/rs/zerolog v1.28.0
 	github.com/stretchr/testify v1.8.0
