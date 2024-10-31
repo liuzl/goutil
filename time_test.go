@@ -41,3 +41,18 @@ func TestCnZodiacGanZhi(t *testing.T) {
 		assert.Equal(t, GetCnZodiacEmojiForTime(tm), c.emoji, "")
 	}
 }
+
+func TestTimeStr(t *testing.T) {
+	cases := []struct {
+		timestamp int64
+		expected  string
+	}{
+		{1577836800, "20200101000000"}, // 2020-01-01 00:00:00 UTC
+	}
+
+	for _, c := range cases {
+		result := TimeStr(c.timestamp)
+		assert.Equal(t, c.expected, result, "TimeStr(%d) = %s; want %s",
+			c.timestamp, result, c.expected)
+	}
+}

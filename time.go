@@ -17,9 +17,9 @@ var (
 	TimeZhi = []string{"甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"}
 )
 
-// TimeStr returns the 20060102030405 format time for timestamp t
+// TimeStr returns the 20060102150405 format time for timestamp t in UTC
 func TimeStr(t int64) string {
-	return time.Unix(t, 0).Format("20060102030405")
+	return time.Unix(t, 0).UTC().Format("20060102150405")
 }
 
 // Sleep is a interruptable version sleep

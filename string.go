@@ -32,10 +32,7 @@ func IsLatin1(r rune) bool {
 
 // IsCJK checkes whether r is a CJK rune or not
 func IsCJK(r rune) bool {
-	if unicode.Is(unicode.Scripts["Han"], r) {
-		return true
-	}
-	return false
+	return unicode.Is(unicode.Scripts["Han"], r)
 }
 
 var noSpaceScripts = []string{"Han", "Lao", "Thai", "Tibetan"}
