@@ -72,8 +72,12 @@ func ErrUnauthorized(w http.ResponseWriter, message interface{}) {
 		http.StatusUnauthorized)
 }
 
-func MustWriteJSON(w http.ResponseWriter, message string) {
+func MustWriteJSONBytes(w http.ResponseWriter, message []byte) {
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-type", "application/json;charset=utf-8")
-	w.Write([]byte(message))
+	w.Write(message)
+}
+
+func MustWriteJSON(w http.ResponseWriter, message string) {
+	MustWriteJSONBytes(w, []byte(message))
 }
