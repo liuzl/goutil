@@ -33,6 +33,12 @@ func ErrMethodNotAllowed(w http.ResponseWriter, message interface{}) {
 		http.StatusMethodNotAllowed)
 }
 
+func ErrNotFound(w http.ResponseWriter, message interface{}) {
+	MustEncodeWithStatus(w,
+		map[string]*Message{"error": {http.StatusNotFound, message}},
+		http.StatusNotFound)
+}
+
 func ErrorMessageWithStatus(w http.ResponseWriter, message interface{}, status int) {
 	MustEncodeWithStatus(w,
 		map[string]*Message{"error": {status, message}},
@@ -58,4 +64,16 @@ func MustEncodeWithStatus(w http.ResponseWriter, i interface{}, status int) {
 	if err := e.Encode(i); err != nil {
 		e.Encode(err.Error())
 	}
+}
+
+func ErrUnauthorized(w http.ResponseWriter, message interface{}) {
+	MustEncodeWithStatus(w,
+		map[string]*Message{"error": {http.StatusUnauthorized, message}},
+		http.StatusUnauthorized)
+}
+
+func MustWriteJSON(w http.ResponseWriter, message string) {
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-type", "application/json;charset=utf-8")
+	w.Write([]byte(message))
 }
