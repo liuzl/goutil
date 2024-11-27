@@ -2,8 +2,26 @@ package rest
 
 import (
 	"encoding/json"
+	"net"
 	"net/http"
+	"strings"
 )
+
+func GetClientIP(r *http.Request) string {
+	if ip := r.Header.Get("X-Real-IP"); ip != "" {
+		return ip
+	}
+	if ip := r.Header.Get("X-Forwarded-For"); ip != "" {
+		if i := strings.Index(ip, ","); i != -1 {
+			return strings.TrimSpace(ip[:i])
+		}
+		return ip
+	}
+	if ip, _, err := net.SplitHostPort(r.RemoteAddr); err == nil {
+		return ip
+	}
+	return r.RemoteAddr
+}
 
 type RestMessage struct {
 	Status  string      `json:"status"`
