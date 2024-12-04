@@ -17,8 +17,8 @@ import (
 )
 
 var (
-	dir = flag.String("zlog_dir",
-		filepath.Join(filepath.Dir(os.Args[0]), "zerolog"), "zerolog dir")
+	dir        = flag.String("zlog_dir", filepath.Join(filepath.Dir(os.Args[0]), "zerolog"), "zerolog dir")
+	alsoStdout = flag.Bool("zlog_stdout", false, "also output logs to stdout")
 )
 
 var c alice.Chain
@@ -39,7 +39,11 @@ func initZlog() {
 			out = os.Stdout
 			fmt.Fprintf(os.Stderr, "err: %+v, will zerolog to stdout\n", err)
 		} else {
-			out = f
+			if *alsoStdout {
+				out = io.MultiWriter(f, os.Stdout)
+			} else {
+				out = f
+			}
 		}
 		log = zerolog.New(out).With().
 			Timestamp().
