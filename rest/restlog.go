@@ -47,6 +47,7 @@ func initZlog() {
 		}
 		log = zerolog.New(out).With().
 			Timestamp().
+			Caller().
 			Str("service", filepath.Base(os.Args[0])).
 			Str("host", hostname).
 			Logger()
