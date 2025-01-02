@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strconv"
 	"sync"
 	"time"
 
@@ -32,6 +33,9 @@ func Log() *zerolog.Logger {
 
 func initZlog() {
 	once.Do(func() {
+		zerolog.CallerMarshalFunc = func(pc uintptr, file string, line int) string {
+			return filepath.Base(file) + ":" + strconv.Itoa(line)
+		}
 		hostname, _ := os.Hostname()
 		var out io.Writer
 		f, err := filestore.NewFileStore(*dir)
