@@ -40,11 +40,12 @@ func initZlog() {
 		var out io.Writer
 		f, err := filestore.NewFileStore(*dir)
 		if err != nil {
-			out = os.Stdout
+			out = zerolog.ConsoleWriter{Out: os.Stdout, NoColor: false}
 			fmt.Fprintf(os.Stderr, "err: %+v, will zerolog to stdout\n", err)
 		} else {
 			if *alsoStdout {
-				out = io.MultiWriter(f, os.Stdout)
+				consoleWriter := zerolog.ConsoleWriter{Out: os.Stdout, NoColor: false}
+				out = io.MultiWriter(f, consoleWriter)
 			} else {
 				out = f
 			}
