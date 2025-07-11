@@ -23,12 +23,13 @@ func TimeStr(t int64) string {
 }
 
 // Sleep is a interruptable version sleep
-func Sleep(d time.Duration, interrupt chan bool) {
+// if interrupted, return true, otherwise return false
+func Sleep(d time.Duration, interrupt chan bool) bool {
 	select {
 	case <-interrupt:
-		return
+		return true
 	case <-time.After(d):
-		return
+		return false
 	}
 }
 
